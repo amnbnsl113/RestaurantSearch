@@ -7,7 +7,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class SearchResultModel extends BaseResponseModel {
 
-    @SerializedName("results_found")private String resultsFound;
+    @SerializedName("results_found")
+    private String resultsFound;
 
     @SerializedName("results_start")
     private String resultsStart;
@@ -16,7 +17,7 @@ public class SearchResultModel extends BaseResponseModel {
     private String resultsShown;
 
     @SerializedName("restaurants")
-    private List<Restaurant> restaurants = null;
+    private List<RestaurantModel> restaurants = null;
 
 
     public String getResultsFound() {
@@ -43,11 +44,11 @@ public class SearchResultModel extends BaseResponseModel {
         this.resultsShown = resultsShown;
     }
 
-    public List<Restaurant> getRestaurants() {
+    public List<RestaurantModel> getRestaurants() {
         return restaurants;
     }
 
-    public void setRestaurants(List<Restaurant> restaurants) {
+    public void setRestaurants(List<RestaurantModel> restaurants) {
         this.restaurants = restaurants;
     }
 

@@ -2,8 +2,6 @@ package com.place.eat.resturantsearch.view.activity;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -75,7 +73,7 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public boolean onQueryTextChange(String newText) {
-            restaurantListFragment.onTextChange(newText);
+            restaurantListFragment.onTextSubmit(newText);
             return false;
         }
     };

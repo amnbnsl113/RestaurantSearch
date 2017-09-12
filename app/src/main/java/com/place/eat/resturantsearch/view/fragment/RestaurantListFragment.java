@@ -4,8 +4,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
-import com.place.eat.resturantsearch.BuildConfig;
 import com.place.eat.resturantsearch.R;
 import com.place.eat.resturantsearch.data.rest.RestCallback;
 import com.place.eat.resturantsearch.data.rest.RetrofitRequest;
@@ -39,22 +39,22 @@ public class RestaurantListFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
     }
 
-    public void onTextChange(String query) {
-
-    }
-
     public void onTextSubmit(String query) {
         queryToSearch = query;
         fetchRestaurants();
     }
 
     void fetchRestaurants() {
+
         if (TextUtils.isEmpty(queryToSearch)) {
             return;
         }
         if (restCallback != null && restCallback.isExecuted()) {
             restCallback.stop();
         }
+
+        adapter.clearItems();
+        showProgress();
 
         Call<SearchResultModel> searchResultModelCall = RetrofitRequest.getSearchResult(queryToSearch);
         restCallback = new RestCallback<>(getActivity(), searchResultModelCall, callback);
@@ -73,17 +73,20 @@ public class RestaurantListFragment extends BaseFragment {
         public void onResponse(Call<SearchResultModel> call, Response<SearchResultModel> response) {
             SearchResultViewModel searchResultViewModel = new SearchResultMapper().toViewModel(response.body());
             populateUi(searchResultViewModel);
+            hideProgress();
         }
 
         @Override
         public void onFailure(Call<SearchResultModel> call, Throwable t) {
-
+            hideProgress();
         }
 
         @Override
         public boolean checkForActive() {
+            // to check if fragment is still visible
             return active;
         }
     };
+
 
 }

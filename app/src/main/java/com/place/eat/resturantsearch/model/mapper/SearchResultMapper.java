@@ -2,6 +2,7 @@ package com.place.eat.resturantsearch.model.mapper;
 
 
 import com.place.eat.resturantsearch.model.jsonmodel.Restaurant;
+import com.place.eat.resturantsearch.model.jsonmodel.RestaurantModel;
 import com.place.eat.resturantsearch.model.jsonmodel.SearchResultModel;
 import com.place.eat.resturantsearch.model.viewmodel.RestaurantViewModel;
 import com.place.eat.resturantsearch.model.viewmodel.SearchResultViewModel;
@@ -21,10 +22,14 @@ public class SearchResultMapper extends BaseMapper<SearchResultViewModel, Search
         List<RestaurantViewModel> restaurantViewModels = new ArrayList<>();
 
         if (searchResultModel != null) {
-            List<Restaurant> restaurants = searchResultModel.getRestaurants();
+            List<RestaurantModel> restaurants = searchResultModel.getRestaurants();
             if (restaurants != null) {
-                for (Restaurant restaurant : restaurants) {
-                    restaurantViewModels.add(new RestaurantViewModel());
+                for (RestaurantModel restaurant : restaurants) {
+                    RestaurantViewModel restaurantViewModel = new RestaurantViewModel();
+                    restaurantViewModel.setId(restaurant.getRestaurant().getId());
+                    restaurantViewModel.setName(restaurant.getRestaurant().getName());
+                    restaurantViewModel.setThumpUrl(restaurant.getRestaurant().getThumb());
+                    restaurantViewModels.add(restaurantViewModel);
                 }
             }
         }
