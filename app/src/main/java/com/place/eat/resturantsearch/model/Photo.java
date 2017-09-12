@@ -7,40 +7,40 @@ import com.google.gson.annotations.SerializedName;
 public class Photo {
 
     @SerializedName("id")
-    @Expose
+
     private String id;
     @SerializedName("url")
-    @Expose
+
     private String url;
     @SerializedName("thumb_url")
-    @Expose
+
     private String thumbUrl;
     @SerializedName("user")
-    @Expose
+
     private User user;
     @SerializedName("res_id")
-    @Expose
+
     private String resId;
     @SerializedName("caption")
-    @Expose
+
     private String caption;
     @SerializedName("timestamp")
-    @Expose
+
     private String timestamp;
     @SerializedName("friendly_time")
-    @Expose
+
     private String friendlyTime;
     @SerializedName("width")
-    @Expose
+
     private String width;
     @SerializedName("height")
-    @Expose
+
     private String height;
     @SerializedName("comments_count")
-    @Expose
+
     private String commentsCount;
     @SerializedName("likes_count")
-    @Expose
+
     private String likesCount;
 
     public String getId() {

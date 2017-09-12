@@ -7,34 +7,34 @@ import com.google.gson.annotations.SerializedName;
 public class AllReview {
 
     @SerializedName("rating")
-    @Expose
+
     private String rating;
     @SerializedName("review_text")
-    @Expose
+
     private String reviewText;
     @SerializedName("id")
-    @Expose
+
     private String id;
     @SerializedName("rating_color")
-    @Expose
+
     private String ratingColor;
     @SerializedName("review_time_friendly")
-    @Expose
+
     private String reviewTimeFriendly;
     @SerializedName("rating_text")
-    @Expose
+
     private String ratingText;
     @SerializedName("timestamp")
-    @Expose
+
     private String timestamp;
     @SerializedName("likes")
-    @Expose
+
     private String likes;
     @SerializedName("user")
-    @Expose
+
     private User_ user;
     @SerializedName("comments_count")
-    @Expose
+
     private String commentsCount;
 
     public String getRating() {

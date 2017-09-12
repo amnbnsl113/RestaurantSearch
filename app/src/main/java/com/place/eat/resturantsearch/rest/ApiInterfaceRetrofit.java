@@ -1,6 +1,7 @@
 package com.place.eat.resturantsearch.rest;
 
 import com.place.eat.resturantsearch.model.GeneralResponseModel;
+import com.place.eat.resturantsearch.model.SearchRespultModel;
 
 import java.util.Map;
 
@@ -20,6 +21,6 @@ import retrofit2.http.Url;
 public interface ApiInterfaceRetrofit {
 
     @GET("search")
-    Call<GeneralResponseModel> getSearchResult(@Header(value = "user-key") String user, @QueryMap Map<String, String> queryParams);
+    Call<SearchRespultModel> getSearchResult(@Header(value = "user-key") String user, @QueryMap Map<String, String> queryParams);
 
 }

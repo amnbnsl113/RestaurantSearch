@@ -2,23 +2,23 @@
 package com.place.eat.resturantsearch.model;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SearchRespultModel {
+public class SearchRespultModel extends GeneralResponseModel {
 
-    @SerializedName("results_found")
-    @Expose
-    private String resultsFound;
+    @SerializedName("results_found")private String resultsFound;
+
     @SerializedName("results_start")
-    @Expose
     private String resultsStart;
+
     @SerializedName("results_shown")
-    @Expose
     private String resultsShown;
+
     @SerializedName("restaurants")
-    @Expose
     private List<Restaurant> restaurants = null;
+
 
     public String getResultsFound() {
         return resultsFound;

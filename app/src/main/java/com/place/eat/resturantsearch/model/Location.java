@@ -7,25 +7,25 @@ import com.google.gson.annotations.SerializedName;
 public class Location {
 
     @SerializedName("address")
-    @Expose
+
     private String address;
     @SerializedName("locality")
-    @Expose
+
     private String locality;
     @SerializedName("city")
-    @Expose
+
     private String city;
     @SerializedName("latitude")
-    @Expose
+
     private String latitude;
     @SerializedName("longitude")
-    @Expose
+
     private String longitude;
     @SerializedName("zipcode")
-    @Expose
+
     private String zipcode;
     @SerializedName("country_id")
-    @Expose
+
     private String countryId;
 
     public String getAddress() {

@@ -7,28 +7,28 @@ import com.google.gson.annotations.SerializedName;
 public class User {
 
     @SerializedName("name")
-    @Expose
+
     private String name;
     @SerializedName("zomato_handle")
-    @Expose
+
     private String zomatoHandle;
     @SerializedName("foodie_level")
-    @Expose
+
     private String foodieLevel;
     @SerializedName("foodie_level_num")
-    @Expose
+
     private String foodieLevelNum;
     @SerializedName("foodie_color")
-    @Expose
+
     private String foodieColor;
     @SerializedName("profile_url")
-    @Expose
+
     private String profileUrl;
     @SerializedName("profile_deeplink")
-    @Expose
+
     private String profileDeeplink;
     @SerializedName("profile_image")
-    @Expose
+
     private String profileImage;
 
     public String getName() {
