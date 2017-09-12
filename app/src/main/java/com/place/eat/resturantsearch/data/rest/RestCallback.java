@@ -1,8 +1,8 @@
-package com.place.eat.resturantsearch.rest;
+package com.place.eat.resturantsearch.data.rest;
 
 import android.content.Context;
 
-import com.place.eat.resturantsearch.model.GeneralResponseModel;
+import com.place.eat.resturantsearch.model.jsonmodel.BaseResponseModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -12,7 +12,7 @@ import retrofit2.Callback;
  * @version 1.0
  * @since 2/1/17
  */
-public class RestCallback<T extends GeneralResponseModel> implements Callback<T> {
+public class RestCallback<T extends BaseResponseModel> implements Callback<T> {
 
     private Call<T> mCall;
 

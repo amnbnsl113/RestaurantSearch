@@ -1,4 +1,4 @@
-package com.place.eat.resturantsearch.rest;
+package com.place.eat.resturantsearch.data.rest;
 
 import android.os.Environment;
 import android.text.TextUtils;

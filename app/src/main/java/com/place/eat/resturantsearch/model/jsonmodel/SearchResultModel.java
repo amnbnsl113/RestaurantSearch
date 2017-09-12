@@ -1,12 +1,11 @@
 
-package com.place.eat.resturantsearch.model;
+package com.place.eat.resturantsearch.model.jsonmodel;
 
 import java.util.List;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SearchRespultModel extends GeneralResponseModel {
+public class SearchResultModel extends BaseResponseModel {
 
     @SerializedName("results_found")private String resultsFound;
 
