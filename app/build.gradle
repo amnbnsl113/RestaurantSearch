@@ -10,6 +10,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled = true
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -21,6 +23,7 @@ android {
                 buildConfigField "String", "REST_HOST", "\"" + project.REST_LIVE_HOST + "\""
                 buildConfigField "int", "NETWORK_READ_TIME_OUT", project.NETWORK_READ_TIME_OUT
                 buildConfigField "int", "CONNECT_TIME_OUT", project.CONNECT_TIME_OUT
+                buildConfigField "String", "API_KEY", "\"" + project.API_KEY_LIVE+ "\""
                 buildConfigField "int", "MAX_IDLE_CONNECTIONS", project.MAX_IDLE_CONNECTIONS
                 buildConfigField "int", "KEEP_ALIVE_DURATION", project.KEEP_ALIVE_DURATION
             }
@@ -30,6 +33,7 @@ android {
                 shrinkResources false
                 buildConfigField "String", "REST_HOST", "\"" + project.REST_STG_HOST + "\""
                 buildConfigField "int", "NETWORK_READ_TIME_OUT", project.NETWORK_READ_TIME_OUT
+                buildConfigField "String", "API_KEY", "\"" + project.API_KEY_STG+ "\""
                 buildConfigField "int", "CONNECT_TIME_OUT", project.CONNECT_TIME_OUT
                 buildConfigField "int", "MAX_IDLE_CONNECTIONS", project.MAX_IDLE_CONNECTIONS
                 buildConfigField "int", "KEEP_ALIVE_DURATION", project.KEEP_ALIVE_DURATION

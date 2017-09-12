@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.place.eat.resturantsearch.R;
 import com.place.eat.resturantsearch.view.fragment.RestaurantListFragment;
@@ -16,8 +17,6 @@ import com.place.eat.resturantsearch.view.fragment.RestaurantListFragment;
 public class MainActivity extends BaseActivity {
 
     private RestaurantListFragment restaurantListFragment;
-    private MenuItem searchMenuItem;
-    private SearchView searchView;
 
     @Override
     protected int getActivityLayout() {
@@ -39,8 +38,8 @@ public class MainActivity extends BaseActivity {
         inflater.inflate(R.menu.menu_items, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchMenuItem = menu.findItem(R.id.searchView);
-        searchView = (SearchView) searchMenuItem.getActionView();
+        MenuItem searchMenuItem = menu.findItem(R.id.searchView);
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
 
         searchView.setSearchableInfo(searchManager.
                 getSearchableInfo(getComponentName()));
@@ -51,10 +50,14 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
+        if (item.getItemId() == R.id.sort) {
+            showSortScreen();
         }
         return true;
+    }
+
+    private void showSortScreen() {
+        Toast.makeText(this, "Sort", Toast.LENGTH_SHORT).show();
     }
 
     @Override

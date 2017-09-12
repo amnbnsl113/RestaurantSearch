@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 public abstract class BaseFragment extends Fragment {
 
-    private boolean active;
+    public boolean active;
 
     @Nullable
     @Override

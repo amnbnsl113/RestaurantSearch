@@ -20,11 +20,12 @@ public class SearchResultMapper extends BaseMapper<SearchResultViewModel, Search
         SearchResultViewModel searchResultViewModel = new SearchResultViewModel();
         List<RestaurantViewModel> restaurantViewModels = new ArrayList<>();
 
-
-        List<Restaurant> restaurants = searchResultModel.getRestaurants();
-        if (restaurants != null) {
-            for (Restaurant restaurant : restaurants) {
-                restaurantViewModels.add(new RestaurantViewModel());
+        if (searchResultModel != null) {
+            List<Restaurant> restaurants = searchResultModel.getRestaurants();
+            if (restaurants != null) {
+                for (Restaurant restaurant : restaurants) {
+                    restaurantViewModels.add(new RestaurantViewModel());
+                }
             }
         }
         searchResultViewModel.setRestaurantList(restaurantViewModels);

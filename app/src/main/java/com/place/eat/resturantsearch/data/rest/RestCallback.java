@@ -20,6 +20,8 @@ public class RestCallback<T extends BaseResponseModel> implements Callback<T> {
         void onResponse(Call<T> call, retrofit2.Response<T> response);
 
         void onFailure(Call<T> call, Throwable t);
+
+        boolean checkForActive();
     }
 
     private RestCallbacks<T> mCallbacks;
@@ -32,17 +34,27 @@ public class RestCallback<T extends BaseResponseModel> implements Callback<T> {
     @Override
     public void onResponse(Call<T> call, retrofit2.Response<T> response) {
         try {
-//            Log.e("API Response==:", response.body().toString());
-            mCallbacks.onResponse(call, response);
+            if (mCallbacks.checkForActive()) {
+                mCallbacks.onResponse(call, response);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    public boolean isExecuted() {
+        return mCall != null && mCall.isExecuted();
+    }
+
+    public void stop() {
+        mCall.cancel();
     }
 
     @Override
     public void onFailure(Call<T> call, Throwable t) {
-        mCallbacks.onFailure(call, t);
+        if (mCallbacks.checkForActive()) {
+            mCallbacks.onFailure(call, t);
+        }
     }
 
     public void executeRequest() {

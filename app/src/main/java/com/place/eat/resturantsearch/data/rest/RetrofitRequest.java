@@ -1,7 +1,9 @@
 package com.place.eat.resturantsearch.data.rest;
 
+import com.place.eat.resturantsearch.BuildConfig;
 import com.place.eat.resturantsearch.model.jsonmodel.SearchResultModel;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -16,8 +18,10 @@ public class RetrofitRequest {
     private static ApiInterfaceRetrofit requestInterface = RetrofitAdapter.getRetrofit(null).create(ApiInterfaceRetrofit.class);
 
 
-    public static Call<SearchResultModel> getSearchResult(String userKey, Map<String, String> queryParams) {
-        return requestInterface.getSearchResult(userKey, queryParams);
+    public static Call<SearchResultModel> getSearchResult(String query) {
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put("q", query);
+        return requestInterface.getSearchResult(BuildConfig.API_KEY, queryParams);
     }
 
 }
