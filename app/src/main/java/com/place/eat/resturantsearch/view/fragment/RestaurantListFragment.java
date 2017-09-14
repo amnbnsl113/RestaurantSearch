@@ -17,6 +17,7 @@ import com.place.eat.resturantsearch.model.jsonmodel.Cuisine_;
 import com.place.eat.resturantsearch.model.jsonmodel.SearchResultModel;
 import com.place.eat.resturantsearch.model.mapper.SearchResultMapper;
 import com.place.eat.resturantsearch.model.viewmodel.SearchResultViewModel;
+import com.place.eat.resturantsearch.view.activity.MainActivity;
 import com.place.eat.resturantsearch.view.adapter.RestaurantAdapter;
 
 import org.parceler.Parcels;
@@ -67,7 +68,17 @@ public class RestaurantListFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        String query = "";
+        if (getActivity() instanceof MainActivity) {
+            query = ((MainActivity) getActivity()).getSearchViewText();
+        }
+        onTextSubmit(query);
     }
 
     public void onTextSubmit(String query) {
@@ -76,10 +87,6 @@ public class RestaurantListFragment extends BaseFragment {
     }
 
     void fetchRestaurants() {
-
-        if (TextUtils.isEmpty(queryToSearch)) {
-            return;
-        }
         if (restCallback != null && restCallback.isExecuted()) {
             restCallback.stop();
         }
@@ -87,7 +94,7 @@ public class RestaurantListFragment extends BaseFragment {
         adapter.clearItems();
         showProgress();
 
-        Call<SearchResultModel> searchResultModelCall = RetrofitRequest.getSearchResult(queryToSearch, String.valueOf(cuisineId), "3");
+        Call<SearchResultModel> searchResultModelCall = RetrofitRequest.getSearchResult(queryToSearch, String.valueOf(cuisineId), "9");
         restCallback = new RestCallback<>(getActivity(), searchResultModelCall, callback);
         restCallback.executeRequest();
     }

@@ -14,14 +14,10 @@ import com.place.eat.resturantsearch.model.jsonmodel.Cuisine_;
 import com.place.eat.resturantsearch.util.FragmentChange;
 import com.place.eat.resturantsearch.util.SearchQueryChanged;
 import com.place.eat.resturantsearch.view.RestaurantWidget;
+import com.place.eat.resturantsearch.view.activity.MainActivity;
 
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +59,16 @@ public class CuisineCarListFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        String query = "";
+        if (getActivity() instanceof MainActivity) {
+            query = ((MainActivity) getActivity()).getSearchViewText();
+        }
+        onTextSubmit(query);
+    }
 
     private void addCard(Cuisine_ cuisine) {
         RestaurantWidget restaurantWidget = new RestaurantWidget(getActivity(), cuisine);

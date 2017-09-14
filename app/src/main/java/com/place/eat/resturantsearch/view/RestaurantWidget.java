@@ -79,9 +79,6 @@ public class RestaurantWidget extends LinearLayout implements SearchQueryChanged
 
 
     void fetchRestaurants() {
-        if (TextUtils.isEmpty(queryToSearch)) {
-            return;
-        }
         if (restCallback != null && restCallback.isExecuted()) {
             restCallback.stop();
         }
@@ -107,9 +104,7 @@ public class RestaurantWidget extends LinearLayout implements SearchQueryChanged
     public void onChange(String newQuery) {
         queryToSearch = newQuery;
         fetchRestaurants();
-        if (!TextUtils.isEmpty(newQuery)) {
-            setVisibility(VISIBLE);
-        }
+        setVisibility(VISIBLE);
     }
 
     private RestCallback.RestCallbacks<SearchResultModel> callback = new RestCallback.RestCallbacks<SearchResultModel>() {

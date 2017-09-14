@@ -10,6 +10,8 @@ import android.text.TextUtils;
 
 import com.place.eat.resturantsearch.R;
 
+import java.util.List;
+
 /**
  * Created by aman on 12/9/17.
  */
@@ -73,5 +75,17 @@ public abstract class BaseActivity extends AppCompatActivity {
             ft.addToBackStack(tag);
         }
         ft.commit();
+    }
+
+    public Fragment getCurrentFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                if (fragment != null && fragment.isVisible())
+                    return fragment;
+            }
+        }
+        return null;
     }
 }

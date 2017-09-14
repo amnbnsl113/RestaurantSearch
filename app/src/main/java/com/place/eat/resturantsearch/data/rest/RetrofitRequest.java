@@ -22,7 +22,9 @@ public class RetrofitRequest {
 
     public static Call<SearchResultModel> getSearchResult(String query, String cuisineId, String count) {
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("q", query);
+        if (!TextUtils.isEmpty(query)) {
+            queryParams.put("q", query);
+        }
         queryParams.put("count", count);
         if (!TextUtils.isEmpty(cuisineId)) {
             queryParams.put("cuisines", cuisineId);

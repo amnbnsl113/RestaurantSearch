@@ -25,9 +25,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity implements FragmentChange {
 
-    private Fragment currFrag;
-    private CuisineCarListFragment cuisineCarListFragment;
-    private CuisineSelectFragment cuisineSelectFragment;
+    private Handler handler = new Handler(Looper.myLooper());
+    private Runnable workRunnable;
+    private SearchView searchView;
 
     @Override
     protected int getActivityLayout() {
@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity implements FragmentChange {
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         MenuItem searchMenuItem = menu.findItem(R.id.searchView);
-        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+        searchView = (SearchView) searchMenuItem.getActionView();
 
         searchView.setSearchableInfo(searchManager.
                 getSearchableInfo(getComponentName()));
@@ -73,32 +73,28 @@ public class MainActivity extends BaseActivity implements FragmentChange {
 
     @Override
     public void activityCreated() {
+        CuisineSelectFragment cuisineSelectFragment;
         pushFragment(R.id.frame_container, cuisineSelectFragment = new CuisineSelectFragment(), false);
-        currFrag = cuisineSelectFragment;
     }
 
 
     @Override
     public void cuisineSelectFrag(ArrayList<Parcelable> parcelables) {
-        currFrag = CuisineCarListFragment.getInstance(parcelables);
+        Fragment currFrag = CuisineCarListFragment.getInstance(parcelables);
         pushFragment(R.id.frame_container, currFrag, true);
     }
 
     @Override
     public void restaurantListFragment(Cuisine_ cuisine) {
-        currFrag = RestaurantListFragment.getInstance(cuisine);
+        Fragment currFrag = RestaurantListFragment.getInstance(cuisine);
         pushFragment(R.id.frame_container, currFrag, true);
     }
 
 
-    private Handler handler = new Handler(Looper.myLooper());
-    private Runnable workRunnable;
     private SearchView.OnQueryTextListener onQueryTextListener = new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String query) {
-            if (currFrag instanceof CuisineCarListFragment) {
-                ((CuisineCarListFragment) currFrag).onTextSubmit(query);
-            }
+            hitQuery(query);
             return false;
         }
 
@@ -108,18 +104,29 @@ public class MainActivity extends BaseActivity implements FragmentChange {
             workRunnable = new Runnable() {
                 @Override
                 public void run() {
-                    if (currFrag instanceof CuisineCarListFragment) {
-                        ((CuisineCarListFragment) currFrag).onTextSubmit(newText);
-                    }
+                    hitQuery(newText);
                 }
             };
 
-            handler.postDelayed(workRunnable, 3000);
-
-
+            handler.postDelayed(workRunnable, 2000);
             return false;
         }
     };
 
+    private void hitQuery(String query) {
+        Fragment currFrag = getCurrentFragment();
+        if (currFrag instanceof CuisineCarListFragment) {
+            ((CuisineCarListFragment) currFrag).onTextSubmit(query);
+        } else if (currFrag instanceof RestaurantListFragment) {
+            ((RestaurantListFragment) currFrag).onTextSubmit(query);
+        }
+    }
 
+
+    public String getSearchViewText() {
+        if (searchView != null) {
+            return String.valueOf(searchView.getQuery());
+        }
+        return "";
+    }
 }
