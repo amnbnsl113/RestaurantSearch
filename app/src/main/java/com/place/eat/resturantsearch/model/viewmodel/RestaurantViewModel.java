@@ -7,7 +7,17 @@ package com.place.eat.resturantsearch.model.viewmodel;
 public class RestaurantViewModel extends BaseViewModel {
     private String id;
     private String name;
+    private String priceForTwo;
     private String thumpUrl;
+
+
+    public String getPriceForTwo() {
+        return priceForTwo;
+    }
+
+    public void setPriceForTwo(String priceForTwo) {
+        this.priceForTwo = priceForTwo;
+    }
 
     public String getId() {
         return id;

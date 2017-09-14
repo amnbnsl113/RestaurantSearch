@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.place.eat.resturantsearch.R;
@@ -18,7 +19,7 @@ import com.place.eat.resturantsearch.model.jsonmodel.SearchResultModel;
 import com.place.eat.resturantsearch.model.mapper.SearchResultMapper;
 import com.place.eat.resturantsearch.model.viewmodel.SearchResultViewModel;
 import com.place.eat.resturantsearch.view.activity.MainActivity;
-import com.place.eat.resturantsearch.view.adapter.RestaurantAdapter;
+import com.place.eat.resturantsearch.view.adapter.CuisineRestaurantAdapter;
 
 import org.parceler.Parcels;
 
@@ -32,8 +33,14 @@ import retrofit2.Response;
 public class RestaurantListFragment extends BaseFragment {
     private String queryToSearch;
     private RestCallback<SearchResultModel> restCallback;
-    private RestaurantAdapter adapter;
+    private CuisineRestaurantAdapter adapter;
     private Integer cuisineId = null;
+    private int start;
+    private LinearLayoutManager manager;
+    private boolean isLoading;
+    private static final int visibleThreshold = 4;
+    private TextView errorText;
+    private String cuisineName;
 
 
     public static RestaurantListFragment getInstance(Cuisine_ cuisine) {
@@ -60,13 +67,15 @@ public class RestaurantListFragment extends BaseFragment {
             Cuisine_ cuisine = Parcels.unwrap(parcelable);
             if (cuisine != null) {
                 cuisineId = cuisine.getCuisineId();
+                cuisineName = cuisine.getCuisineName();
             }
         }
-
-        adapter = new RestaurantAdapter(null, getActivity());
+        errorText = view.findViewById(R.id.errorText);
+        adapter = new CuisineRestaurantAdapter(null, getActivity(), false);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.addOnScrollListener(listener);
+        recyclerView.setLayoutManager(manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
     }
 
@@ -76,13 +85,16 @@ public class RestaurantListFragment extends BaseFragment {
 
         String query = "";
         if (getActivity() instanceof MainActivity) {
+            (getActivity()).setTitle(cuisineName);
             query = ((MainActivity) getActivity()).getSearchViewText();
         }
         onTextSubmit(query);
     }
 
+
     public void onTextSubmit(String query) {
         queryToSearch = query;
+        start = 0;
         fetchRestaurants();
     }
 
@@ -90,32 +102,59 @@ public class RestaurantListFragment extends BaseFragment {
         if (restCallback != null && restCallback.isExecuted()) {
             restCallback.stop();
         }
-
-        adapter.clearItems();
-        showProgress();
-
-        Call<SearchResultModel> searchResultModelCall = RetrofitRequest.getSearchResult(queryToSearch, String.valueOf(cuisineId), "9");
+        if (start == 0) {
+            adapter.clearItems();
+            showProgress();
+        }
+        isLoading = true;
+        Call<SearchResultModel> searchResultModelCall = RetrofitRequest.getSearchResult(queryToSearch, String.valueOf(cuisineId), "9", start);
         restCallback = new RestCallback<>(getActivity(), searchResultModelCall, callback);
         restCallback.executeRequest();
     }
 
 
     private void populateUi(SearchResultViewModel searchResultViewModel) {
-        if (searchResultViewModel != null)
-            adapter.swapItems(searchResultViewModel.getRestaurantList());
+        if (searchResultViewModel != null) {
+            adapter.addItems(searchResultViewModel.getRestaurantList());
+        }
+        if (adapter.getItemCount() == 0) {
+            showMessage();
+        } else {
+            hideMessage();
+        }
     }
 
+    private void showMessage() {
+        errorText.setVisibility(View.VISIBLE);
+    }
+
+    private void hideMessage() {
+        errorText.setVisibility(View.GONE);
+    }
+
+    private void detectForNextCall() {
+
+        int totalItemCount = manager.getItemCount();
+        int lastVisibleItem = manager.findLastVisibleItemPosition();
+
+        if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+            fetchRestaurants();
+        }
+    }
 
     private RestCallback.RestCallbacks<SearchResultModel> callback = new RestCallback.RestCallbacks<SearchResultModel>() {
         @Override
         public void onResponse(Call<SearchResultModel> call, Response<SearchResultModel> response) {
+            isLoading = false;
             SearchResultViewModel searchResultViewModel = new SearchResultMapper().toViewModel(response.body());
+            start = searchResultViewModel.getNextCount();
             populateUi(searchResultViewModel);
             hideProgress();
         }
 
         @Override
         public void onFailure(Call<SearchResultModel> call, Throwable t) {
+            isLoading = false;
             hideProgress();
         }
 
@@ -126,5 +165,12 @@ public class RestaurantListFragment extends BaseFragment {
         }
     };
 
+    private RecyclerView.OnScrollListener listener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            detectForNextCall();
+        }
+    };
 
 }

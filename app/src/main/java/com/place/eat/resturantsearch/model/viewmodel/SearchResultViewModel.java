@@ -7,7 +7,17 @@ import java.util.List;
  */
 
 public class SearchResultViewModel extends BaseViewModel {
+    private int nextCount;
     private List<RestaurantViewModel> restaurantList;
+
+
+    public int getNextCount() {
+        return nextCount;
+    }
+
+    public void setNextCount(int nextCount) {
+        this.nextCount = nextCount;
+    }
 
     public List<RestaurantViewModel> getRestaurantList() {
         return restaurantList;

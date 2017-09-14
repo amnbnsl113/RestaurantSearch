@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +21,6 @@ import com.place.eat.resturantsearch.model.viewmodel.RestaurantViewModel;
 import com.place.eat.resturantsearch.model.viewmodel.SearchResultViewModel;
 import com.place.eat.resturantsearch.util.FragmentChange;
 import com.place.eat.resturantsearch.util.SearchQueryChanged;
-import com.place.eat.resturantsearch.view.activity.MainActivity;
 import com.place.eat.resturantsearch.view.adapter.CuisineRestaurantAdapter;
 
 import java.util.List;
@@ -64,7 +62,7 @@ public class RestaurantWidget extends LinearLayout implements SearchQueryChanged
         RecyclerView recyclerView = findViewById(R.id.restaurantList);
         recyclerView.setLayoutManager(new GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false));
         recyclerView.setNestedScrollingEnabled(false);
-        adapter = new CuisineRestaurantAdapter(null, context);
+        adapter = new CuisineRestaurantAdapter(null, context, true);
         recyclerView.setAdapter(adapter);
 
         Button viewMoreButton = findViewById(R.id.viewMoreButton);

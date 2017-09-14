@@ -28,7 +28,6 @@ import java.util.List;
 public class CuisineCarListFragment extends BaseFragment {
     private LinearLayout baseContainer;
     private List<SearchQueryChanged> searchQueryChangedList = new ArrayList<>();
-    private FragmentChange fragmentChange;
 
     public static CuisineCarListFragment getInstance(ArrayList<Parcelable> cuisines) {
         CuisineCarListFragment cuisineCarListFragment = new CuisineCarListFragment();
@@ -64,6 +63,8 @@ public class CuisineCarListFragment extends BaseFragment {
         super.onResume();
 
         String query = "";
+        getActivity().setTitle("Restaurants");
+
         if (getActivity() instanceof MainActivity) {
             query = ((MainActivity) getActivity()).getSearchViewText();
         }

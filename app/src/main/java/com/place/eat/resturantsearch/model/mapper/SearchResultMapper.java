@@ -22,6 +22,8 @@ public class SearchResultMapper extends BaseMapper<SearchResultViewModel, Search
         List<RestaurantViewModel> restaurantViewModels = new ArrayList<>();
 
         if (searchResultModel != null) {
+            searchResultViewModel.setNextCount(getNextCount(searchResultModel));
+
             List<RestaurantModel> restaurants = searchResultModel.getRestaurants();
             if (restaurants != null) {
                 for (RestaurantModel restaurant : restaurants) {
@@ -29,11 +31,20 @@ public class SearchResultMapper extends BaseMapper<SearchResultViewModel, Search
                     restaurantViewModel.setId(restaurant.getRestaurant().getId());
                     restaurantViewModel.setName(restaurant.getRestaurant().getName());
                     restaurantViewModel.setThumpUrl(restaurant.getRestaurant().getThumb());
+                    restaurantViewModel.setPriceForTwo(restaurant.getRestaurant().getCurrency() + " " + restaurant.getRestaurant().getAverageCostForTwo());
                     restaurantViewModels.add(restaurantViewModel);
                 }
             }
         }
         searchResultViewModel.setRestaurantList(restaurantViewModels);
         return searchResultViewModel;
+    }
+
+    private int getNextCount(SearchResultModel searchResultModel) {
+        try {
+            return Integer.parseInt(searchResultModel.getResultsStart()) + Integer.parseInt(searchResultModel.getResultsShown());
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }

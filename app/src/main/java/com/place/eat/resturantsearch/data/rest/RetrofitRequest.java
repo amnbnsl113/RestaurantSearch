@@ -21,10 +21,15 @@ public class RetrofitRequest {
 
 
     public static Call<SearchResultModel> getSearchResult(String query, String cuisineId, String count) {
+        return getSearchResult(query, cuisineId, count, 0);
+    }
+
+    public static Call<SearchResultModel> getSearchResult(String query, String cuisineId, String count, int start) {
         Map<String, String> queryParams = new HashMap<>();
         if (!TextUtils.isEmpty(query)) {
             queryParams.put("q", query);
         }
+        queryParams.put("start", String.valueOf(start));
         queryParams.put("count", count);
         if (!TextUtils.isEmpty(cuisineId)) {
             queryParams.put("cuisines", cuisineId);
