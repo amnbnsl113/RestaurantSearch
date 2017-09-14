@@ -9,7 +9,16 @@ public class RestaurantViewModel extends BaseViewModel {
     private String name;
     private String priceForTwo;
     private String thumpUrl;
+    private String location;
 
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public String getPriceForTwo() {
         return priceForTwo;

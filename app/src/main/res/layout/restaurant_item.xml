@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="10dp">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:padding="10dp">
 
     <ImageView
         android:id="@+id/thumb"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:contentDescription="@null" />
+        android:contentDescription="@null"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,13 +22,20 @@
             style="@style/MedText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Sample" />
+            tools:text="Sample"/>
 
         <TextView
             android:id="@+id/descText"
             style="@style/SmallText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Sample" />
+            tools:text="Sample"/>
+
+        <TextView
+            android:id="@+id/locationText"
+            style="@style/SmallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Sample"/>
     </LinearLayout>
 </LinearLayout>

@@ -17,20 +17,20 @@
 
     <style name="MedText">
         <item name="android:textSize">16sp</item>
-        <item name="android:padding">5dp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="MedTextBtn">
         <item name="android:textSize">16sp</item>
         <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">2dp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/border_1dp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="SmallText">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/gray</item>
     </style>
 
@@ -45,6 +45,10 @@
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="VerySmallText" parent="SmallText">
+        <item name="android:textSize">10sp</item>
     </style>
 
 

@@ -31,6 +31,8 @@ public class SearchResultMapper extends BaseMapper<SearchResultViewModel, Search
                     restaurantViewModel.setId(restaurant.getRestaurant().getId());
                     restaurantViewModel.setName(restaurant.getRestaurant().getName());
                     restaurantViewModel.setThumpUrl(restaurant.getRestaurant().getThumb());
+                    if (restaurant.getRestaurant().getLocation() != null)
+                        restaurantViewModel.setLocation(restaurant.getRestaurant().getLocation().getAddress());
                     restaurantViewModel.setPriceForTwo(restaurant.getRestaurant().getCurrency() + " " + restaurant.getRestaurant().getAverageCostForTwo());
                     restaurantViewModels.add(restaurantViewModel);
                 }

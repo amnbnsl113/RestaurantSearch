@@ -92,7 +92,7 @@ public class MainActivity extends BaseActivity implements FragmentChange {
 
     private void showSortScreen() {
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN) {
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_SETTLING);
         } else {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         }

@@ -15,7 +15,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="2dp">
 
         <TextView
             android:id="@+id/titleText"
@@ -27,6 +28,13 @@
         <TextView
             android:id="@+id/descText"
             style="@style/SmallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Sample"/>
+
+        <TextView
+            android:id="@+id/locationText"
+            style="@style/VerySmallText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Sample"/>

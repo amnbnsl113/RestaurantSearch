@@ -50,7 +50,8 @@ public class CuisineRestaurantAdapter extends RecyclerView.Adapter<CuisineRestau
         RestaurantViewModel restaurantViewModel = restaurantViewModels.get(position);
 
         holder.titleText.setText(restaurantViewModel.getName());
-        holder.descText.setText(restaurantViewModel.getPriceForTwo());
+        holder.descText.setText(context.getString(R.string.costForTwo, restaurantViewModel.getPriceForTwo()));
+        holder.locationText.setText(restaurantViewModel.getLocation());
 
         Glide.with(context)
                 .load(restaurantViewModel.getThumpUrl())
@@ -94,12 +95,14 @@ public class CuisineRestaurantAdapter extends RecyclerView.Adapter<CuisineRestau
         private ImageView thumb;
         private TextView titleText;
         private TextView descText;
+        private TextView locationText;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             thumb = (ImageView) itemView.findViewById(R.id.thumb);
             titleText = (TextView) itemView.findViewById(R.id.titleText);
             descText = (TextView) itemView.findViewById(R.id.descText);
+            locationText = (TextView) itemView.findViewById(R.id.locationText);
 
         }
     }
