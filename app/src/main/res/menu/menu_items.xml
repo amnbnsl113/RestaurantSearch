@@ -13,5 +13,6 @@
         android:id="@+id/sort"
         android:icon="@drawable/ic_sort"
         android:title="@string/sort"
+        android:visible="false"
         app:showAsAction="always"/>
 </menu>

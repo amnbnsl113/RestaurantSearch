@@ -5,17 +5,21 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.place.eat.resturantsearch.R;
 import com.place.eat.resturantsearch.model.jsonmodel.Cuisine;
 import com.place.eat.resturantsearch.model.jsonmodel.Cuisine_;
+import com.place.eat.resturantsearch.util.Constants;
 import com.place.eat.resturantsearch.util.FragmentChange;
 import com.place.eat.resturantsearch.view.fragment.CuisineCarListFragment;
 import com.place.eat.resturantsearch.view.fragment.CuisineSelectFragment;
@@ -28,6 +32,9 @@ public class MainActivity extends BaseActivity implements FragmentChange {
     private Handler handler = new Handler(Looper.myLooper());
     private Runnable workRunnable;
     private SearchView searchView;
+    private MenuItem sortItem;
+    private BottomSheetBehavior<RelativeLayout> bottomSheetBehavior;
+    private MenuItem searchMenuItem;
 
     @Override
     protected int getActivityLayout() {
@@ -40,16 +47,32 @@ public class MainActivity extends BaseActivity implements FragmentChange {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
+
+        RelativeLayout bottomSheetSortLayout = (RelativeLayout) findViewById(R.id.bottom_sheet_sort_layout);
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetSortLayout);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
     }
 
+    @Override
+    public void onBackPressed() {
+        if (bottomSheetBehavior != null && bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            return;
+        }
+
+        super.onBackPressed();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_items, menu);
 
+        sortItem = menu.findItem(R.id.sort);
+
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        MenuItem searchMenuItem = menu.findItem(R.id.searchView);
+        searchMenuItem = menu.findItem(R.id.searchView);
         searchView = (SearchView) searchMenuItem.getActionView();
 
         searchView.setSearchableInfo(searchManager.
@@ -68,7 +91,11 @@ public class MainActivity extends BaseActivity implements FragmentChange {
     }
 
     private void showSortScreen() {
-        Toast.makeText(this, "Sort", Toast.LENGTH_SHORT).show();
+        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        } else {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        }
     }
 
     @Override
@@ -122,11 +149,63 @@ public class MainActivity extends BaseActivity implements FragmentChange {
         }
     }
 
+    public void sortData(View view) {
+        if (bottomSheetBehavior != null) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        }
+
+        switch (view.getId()) {
+            case R.id.ratingAsc: {
+                sortData(Constants.SORT_BY.RATING, Constants.SORT_ORDER.ASC);
+                break;
+            }
+            case R.id.ratingDesc: {
+                sortData(Constants.SORT_BY.RATING, Constants.SORT_ORDER.DESC);
+                break;
+            }
+            case R.id.costAsc: {
+                sortData(Constants.SORT_BY.COST, Constants.SORT_ORDER.ASC);
+                break;
+            }
+            case R.id.costDesc: {
+                sortData(Constants.SORT_BY.COST, Constants.SORT_ORDER.DESC);
+                break;
+            }
+            case R.id.distanceAsc: {
+                sortData(Constants.SORT_BY.DISTANCE, Constants.SORT_ORDER.ASC);
+                break;
+            }
+            case R.id.distanceDesc: {
+                sortData(Constants.SORT_BY.DISTANCE, Constants.SORT_ORDER.DESC);
+                break;
+            }
+        }
+
+    }
+
+    private void sortData(String sortBy, String sortOrder) {
+        Fragment fragment = getCurrentFragment();
+        if (fragment instanceof RestaurantListFragment) {
+            ((RestaurantListFragment) fragment).onSort(sortBy, sortOrder);
+        }
+    }
 
     public String getSearchViewText() {
         if (searchView != null) {
             return String.valueOf(searchView.getQuery());
         }
         return "";
+    }
+
+    public void setSortIconVisibility(boolean visibility) {
+        if (sortItem != null) {
+            sortItem.setVisible(visibility);
+        }
+    }
+
+    public void setSearchIconVisibility(boolean visibility) {
+        if (searchMenuItem != null) {
+            searchMenuItem.setVisible(visibility);
+        }
     }
 }

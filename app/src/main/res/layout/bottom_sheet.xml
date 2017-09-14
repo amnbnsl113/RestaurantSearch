@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+              android:padding="10dp">
+
+    <View
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/sort_by"/>
+
+    <Button
+        android:id="@+id/costAsc"
+        style="@style/MedTextBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="sortData"
+        android:text="@string/cost_asc"/>
+
+    <Button
+        android:id="@+id/costDesc"
+        style="@style/MedTextBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="sortData"
+        android:text="@string/cost_desc"/>
+
+    <Button
+        android:id="@+id/ratingAsc"
+        style="@style/MedTextBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="sortData"
+        android:text="@string/rating_asc"/>
+
+    <Button
+        android:id="@+id/ratingDesc"
+        style="@style/MedTextBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="sortData"
+        android:text="@string/rating_desc"/>
+
+    <Button
+        android:id="@+id/distanceAsc"
+        style="@style/MedTextBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="sortData"
+        android:text="@string/distance_asc"/>
+
+    <Button
+        android:id="@+id/distanceDesc"
+        style="@style/MedTextBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="sortData"
+        android:text="@string/distance_desc"/>
+
+</LinearLayout>

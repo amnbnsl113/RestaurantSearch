@@ -6,4 +6,11 @@
     <string name="submit">Submit</string>
     <string name="cuisine_select_text">Please select atleast 4 Cuisines</string>
     <string name="no_restaurant_found">No Restaurant Found</string>
+    <string name="cost_asc">Cost - Asc</string>
+    <string name="cost_desc">Cost - Desc</string>
+    <string name="rating_asc">Rating - Asc</string>
+    <string name="rating_desc">Rating - Desc</string>
+    <string name="distance_asc">Distance - Asc</string>
+    <string name="distance_desc">Distance - Desc</string>
+    <string name="sort_by">Sort By</string>
 </resources>

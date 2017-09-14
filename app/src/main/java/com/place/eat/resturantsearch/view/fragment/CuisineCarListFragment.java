@@ -66,6 +66,8 @@ public class CuisineCarListFragment extends BaseFragment {
         getActivity().setTitle("Restaurants");
 
         if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setSortIconVisibility(false);
+            ((MainActivity) getActivity()).setSearchIconVisibility(true);
             query = ((MainActivity) getActivity()).getSearchViewText();
         }
         onTextSubmit(query);

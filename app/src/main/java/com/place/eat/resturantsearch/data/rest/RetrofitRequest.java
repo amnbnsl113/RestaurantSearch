@@ -25,6 +25,10 @@ public class RetrofitRequest {
     }
 
     public static Call<SearchResultModel> getSearchResult(String query, String cuisineId, String count, int start) {
+        return getSearchResult(query, cuisineId, count, start, "", "");
+    }
+
+    public static Call<SearchResultModel> getSearchResult(String query, String cuisineId, String count, int start, String sortBy, String sortOrder) {
         Map<String, String> queryParams = new HashMap<>();
         if (!TextUtils.isEmpty(query)) {
             queryParams.put("q", query);
@@ -33,6 +37,12 @@ public class RetrofitRequest {
         queryParams.put("count", count);
         if (!TextUtils.isEmpty(cuisineId)) {
             queryParams.put("cuisines", cuisineId);
+        }
+        if (!TextUtils.isEmpty(sortBy)) {
+            queryParams.put("sort", sortBy);
+        }
+        if (!TextUtils.isEmpty(sortOrder)) {
+            queryParams.put("order", sortOrder);
         }
         return requestInterface.getSearchResult(BuildConfig.API_KEY, queryParams);
     }

@@ -21,6 +21,14 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="MedTextBtn">
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/border_1dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="SmallText">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/gray</item>

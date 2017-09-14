@@ -14,6 +14,7 @@ import com.place.eat.resturantsearch.R;
 import com.place.eat.resturantsearch.model.jsonmodel.Cuisine;
 import com.place.eat.resturantsearch.model.jsonmodel.CuisineModel;
 import com.place.eat.resturantsearch.util.FragmentChange;
+import com.place.eat.resturantsearch.view.activity.MainActivity;
 import com.place.eat.resturantsearch.view.adapter.CuisineSelectAdapter;
 
 import org.parceler.Parcels;
@@ -52,6 +53,10 @@ public class CuisineSelectFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         getActivity().setTitle("Select Cuisine");
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setSearchIconVisibility(false);
+            ((MainActivity) getActivity()).setSortIconVisibility(false);
+        }
     }
 
     @Override

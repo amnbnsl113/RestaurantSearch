@@ -2,18 +2,14 @@ package com.place.eat.resturantsearch.view.fragment;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.place.eat.resturantsearch.R;
 import com.place.eat.resturantsearch.data.rest.RestCallback;
 import com.place.eat.resturantsearch.data.rest.RetrofitRequest;
-import com.place.eat.resturantsearch.model.jsonmodel.Cuisine;
 import com.place.eat.resturantsearch.model.jsonmodel.Cuisine_;
 import com.place.eat.resturantsearch.model.jsonmodel.SearchResultModel;
 import com.place.eat.resturantsearch.model.mapper.SearchResultMapper;
@@ -41,6 +37,8 @@ public class RestaurantListFragment extends BaseFragment {
     private static final int visibleThreshold = 4;
     private TextView errorText;
     private String cuisineName;
+    private String sortBy;
+    private String sortOrder;
 
 
     public static RestaurantListFragment getInstance(Cuisine_ cuisine) {
@@ -76,19 +74,28 @@ public class RestaurantListFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(listener);
         recyclerView.setLayoutManager(manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        (getActivity()).setTitle(cuisineName);
 
         String query = "";
         if (getActivity() instanceof MainActivity) {
-            (getActivity()).setTitle(cuisineName);
             query = ((MainActivity) getActivity()).getSearchViewText();
+            ((MainActivity) getActivity()).setSortIconVisibility(true);
+
         }
         onTextSubmit(query);
+    }
+
+    public void onSort(String sortBy, String sortOrder) {
+        this.sortBy = sortBy;
+        this.sortOrder = sortOrder;
+        start = 0;
+        fetchRestaurants();
+
     }
 
 
@@ -107,7 +114,7 @@ public class RestaurantListFragment extends BaseFragment {
             showProgress();
         }
         isLoading = true;
-        Call<SearchResultModel> searchResultModelCall = RetrofitRequest.getSearchResult(queryToSearch, String.valueOf(cuisineId), "9", start);
+        Call<SearchResultModel> searchResultModelCall = RetrofitRequest.getSearchResult(queryToSearch, String.valueOf(cuisineId), "9", start, sortBy, sortOrder);
         restCallback = new RestCallback<>(getActivity(), searchResultModelCall, callback);
         restCallback.executeRequest();
     }
