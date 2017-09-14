@@ -1,5 +1,8 @@
 package com.place.eat.resturantsearch.view.fragment;
 
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -9,10 +12,14 @@ import android.widget.Toast;
 import com.place.eat.resturantsearch.R;
 import com.place.eat.resturantsearch.data.rest.RestCallback;
 import com.place.eat.resturantsearch.data.rest.RetrofitRequest;
+import com.place.eat.resturantsearch.model.jsonmodel.Cuisine;
+import com.place.eat.resturantsearch.model.jsonmodel.Cuisine_;
 import com.place.eat.resturantsearch.model.jsonmodel.SearchResultModel;
 import com.place.eat.resturantsearch.model.mapper.SearchResultMapper;
 import com.place.eat.resturantsearch.model.viewmodel.SearchResultViewModel;
 import com.place.eat.resturantsearch.view.adapter.RestaurantAdapter;
+
+import org.parceler.Parcels;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -25,6 +32,20 @@ public class RestaurantListFragment extends BaseFragment {
     private String queryToSearch;
     private RestCallback<SearchResultModel> restCallback;
     private RestaurantAdapter adapter;
+    private Integer cuisineId = null;
+
+
+    public static RestaurantListFragment getInstance(Cuisine_ cuisine) {
+
+        RestaurantListFragment restaurantListFragment = new RestaurantListFragment();
+        if (cuisine != null) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("cuisine", Parcels.wrap(cuisine));
+            restaurantListFragment.setArguments(bundle);
+        }
+        return restaurantListFragment;
+    }
+
 
     @Override
     protected int getFragmentLayout() {
@@ -33,10 +54,20 @@ public class RestaurantListFragment extends BaseFragment {
 
     @Override
     protected void initViews(View view) {
+        Parcelable parcelable = getArguments().getParcelable("cuisine");
+        if (parcelable != null) {
+            Cuisine_ cuisine = Parcels.unwrap(parcelable);
+            if (cuisine != null) {
+                cuisineId = cuisine.getCuisineId();
+            }
+        }
+
         adapter = new RestaurantAdapter(null, getActivity());
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+
     }
 
     public void onTextSubmit(String query) {
@@ -56,7 +87,7 @@ public class RestaurantListFragment extends BaseFragment {
         adapter.clearItems();
         showProgress();
 
-        Call<SearchResultModel> searchResultModelCall = RetrofitRequest.getSearchResult(queryToSearch);
+        Call<SearchResultModel> searchResultModelCall = RetrofitRequest.getSearchResult(queryToSearch, String.valueOf(cuisineId), "3");
         restCallback = new RestCallback<>(getActivity(), searchResultModelCall, callback);
         restCallback.executeRequest();
     }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.place.eat.resturantsearch.view.activity.MainActivity">
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 tools:context="com.place.eat.resturantsearch.view.activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -17,8 +17,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            app:layout_scrollFlags="exitUntilCollapsed"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -26,5 +26,5 @@
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 </android.support.design.widget.CoordinatorLayout>

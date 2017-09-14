@@ -3,4 +3,7 @@
     <string name="sort">Sort</string>
     <string name="search">Search</string>
     <string name="error_message">Some Error Occurred, Please try again after sometime</string>
+    <string name="view_more">View More</string>
+    <string name="submit">Submit</string>
+    <string name="cuisine_select_text">Please select atleast 4 Cuisines</string>
 </resources>
